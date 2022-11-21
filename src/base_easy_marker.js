@@ -707,7 +707,10 @@ class EasyMarker {
         clearInterval(this.scrollInterval)
       }
       const { x, y } = getTouchPosition(e, offset)
-      const target = document.elementFromPoint(x, y)
+      let target = document.elementFromPoint(x, y)
+      if (target instanceof HTMLIFrameElement) {
+        target = target.contentWindow.document.elementFromPoint(x, y)
+      }
       if (this.isContains(target)) {
         this.moveCursor(target, x, y)
       }
